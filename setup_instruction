@@ -1,6 +1,6 @@
 ***************************************** Setup Instruction *************************************************
 =============================================================================================================
-This document serves as a setup instruction for users to build up their own Light Dimmer System. There are 
+This document serves as a setup instruction for users to build up their own Light Dimmer System. There are
 two major parts for this document: Hardware setup and software setup.
 -------------------------------------------------------------------------------------------------------------
 
@@ -15,6 +15,7 @@ list of hardware:
         |                                 |
         | TSL2561 light sensor       x 1  |
         | 5v Stepper motor           x 1  |
+        | AA Batteries               x 8  |
         | H-Bridge Transistors       x 1  |
         | Light Dimmer               x 1  |
         | Gumstix(with power cord)   x 2  |
@@ -39,7 +40,7 @@ for single Gumstix board mode:
 
 3.  connect motor to Gumstix board via AC97 and H-Bridge Transistors for motor driver.
 
-        GPIO  28 - pink wire   
+        GPIO  28 - pink wire
         GPIO  29 - blue wire
         GPIO  30 - orange wire
         GPIO  31 - yellow wire
@@ -50,6 +51,9 @@ for single Gumstix board mode:
         |                            |
         | (31 )  (   )  (   )  (28 ) |
         ------------------------------
+
+      The H-Bridge must be connected to the battery and must share a common ground with the Gumstix.
+      The red wire on the motor must be connected to the battery as well.
 
 4.  attach motor the the light dimmer.
 
@@ -73,19 +77,19 @@ The rest hardware setting is the same as the single Gumstix board mode.
 ||   Software Setup   ||
 ||                    ||
   ====================
-  
+
 for single Gumstix board mode:
 
-1.  open terminal, enter /km folder and type make command to 
+1.  open terminal, enter /km folder and type make command to
     compile luxVal.ko kernel module.
 
-2.  enter /lightSensor folder and type make command to compile 
+2.  enter /lightSensor folder and type make command to compile
     light3 program for reading lux values.
 
 3.  enter /motor folder and type make command to compile motor.ko
     kernel module.
 
-4.  enter /untitled folder and type qmake command to create a Qt 
+4.  enter /untitled folder and type qmake command to create a Qt
     project, open Makefile and replace paths under INCPATH with:
     -I/ad/eng/courses/ec/ec535/gumstix/oe/cross/arm-angstrom-linux-gnueabi/include/c++ \
     -I/ad/eng/courses/ec/ec535/gumstix/oe/cross/arm-angstrom-linux-gnueabi/include/c++/arm-angstrom-linux-gnueabi \
@@ -97,14 +101,14 @@ for single Gumstix board mode:
     -I/ad/eng/courses/ec/ec535/gumstix/oe/qt/include/QtGui \
     -I/ad/eng/courses/ec/ec535/gumstix/oe/qt/include/QtNetwork \
     -I/ad/eng/courses/ec/ec535/gumstix/oe/qt/include \
-    -I/ad/eng/courses/ec/ec535/gumstix/oe/qt/mkspecs/qws/linux-arm-g++ -I. -I. -I. -I. 
+    -I/ad/eng/courses/ec/ec535/gumstix/oe/qt/mkspecs/qws/linux-arm-g++ -I. -I. -I. -I.
 
 5.  type make command to compile GUI program.
 
-6.  open minicom, use rz -bZ command to transfer /luxVal.ko, light3, 
+6.  open minicom, use rz -bZ command to transfer /luxVal.ko, light3,
     motor.ko, and untitled to the Gumstix board.
 
-7.  run the setup.sh script and wait for GUI to show. 
+7.  run the setupNoBlue.sh script and wait for GUI to show.
 
 ---------------------------------------------------------------------------------------------------------
 for two Gumstix boards mode:
@@ -136,14 +140,14 @@ for two Gumstix boards mode:
 
         iii. Type “/etc/default/bluetooth restart” to restart the bluetooth module
 
-2.  enter /bluetooth/client/folder and make to compile light3 program and load it to the Slave Gumstix.
-    type light3 & to start bluetooth after server program start. (We do not need the light3 program under 
+2.  enter /bluetooth/client/folder and make to compile client program and load it to the Slave Gumstix.
+    type client & to start bluetooth after server program start. (We do not need the client program under
     /lightSensor/ folder.)
 
 3.  enter /bluetooth/ folder and type make command to compile server program and load it to the Master
-    Gumstix and it should be start be setup.sh script.
+    Gumstix and it should be started by the setup.sh script.
 
 4.  Compile the rest of the files and load them to the Master Gumstix as in single board mode.
 
-5.  run the setup.sh script and wait slave gumsitx to show "connection successful" and the Master 
-    Gumstix should show the GUI shortly. 
+5.  run the setupBluetooth.sh script and wait slave Gumstix to show "connection successful" and the Master
+    Gumstix should show the GUI shortly.
