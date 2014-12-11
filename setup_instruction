@@ -80,16 +80,16 @@ The rest hardware setting is the same as the single Gumstix board mode.
 
 for single Gumstix board mode:
 
-1.  open terminal, enter /km folder and type make command to
+1.  open terminal, enter /km folder and run the Makefile to
     compile luxVal.ko kernel module.
 
-2.  enter /lightSensor folder and type make command to compile
+2.  enter /lightSensor folder and run the Makefile to compile
     light3 program for reading lux values.
 
-3.  enter /motor folder and type make command to compile motor.ko
+3.  enter /motor folder and run the Makefile to compile motor.ko
     kernel module.
 
-4.  enter /untitled folder and type qmake command to create a Qt
+4.  enter /untitled folder and run the qmake command to create a Qt
     project, open Makefile and replace paths under INCPATH with:
     -I/ad/eng/courses/ec/ec535/gumstix/oe/cross/arm-angstrom-linux-gnueabi/include/c++ \
     -I/ad/eng/courses/ec/ec535/gumstix/oe/cross/arm-angstrom-linux-gnueabi/include/c++/arm-angstrom-linux-gnueabi \
@@ -103,7 +103,7 @@ for single Gumstix board mode:
     -I/ad/eng/courses/ec/ec535/gumstix/oe/qt/include \
     -I/ad/eng/courses/ec/ec535/gumstix/oe/qt/mkspecs/qws/linux-arm-g++ -I. -I. -I. -I.
 
-5.  type make command to compile GUI program.
+5.  run the Makefile to compile GUI program.
 
 6.  open minicom, use rz -bZ command to transfer /luxVal.ko, light3,
     motor.ko, and untitled to the Gumstix board.
@@ -140,11 +140,13 @@ for two Gumstix boards mode:
 
         iii. Type “/etc/default/bluetooth restart” to restart the bluetooth module
 
-2.  enter /bluetooth/client/folder and make to compile client program and load it to the Slave Gumstix.
-    type client & to start bluetooth after server program start. (We do not need the client program under
+2.  enter /bluetooth/client/folder and edit the macro BDADDR_SERVER to have the MAC address of the server, values must be typed in right to left order
+    run the Makefile to compile client program and load it to the Slave Gumstix.
+    type client& to start the service after server program had started. (We do not need the client program under
     /lightSensor/ folder.)
 
-3.  enter /bluetooth/ folder and type make command to compile server program and load it to the Master
+3.  enter /bluetooth/ folder and edit the macro BDADDR_CLIENT to have the MAC address of the client, values must be typed in right to left order
+    Run the Makefile to compile server program and load it to the Master
     Gumstix and it should be started by the setup.sh script.
 
 4.  Compile the rest of the files and load them to the Master Gumstix as in single board mode.
